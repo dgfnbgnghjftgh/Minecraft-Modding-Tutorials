@@ -1,39 +1,20 @@
-package cjminecraft.bitofeverything.init;
+package com.example.mymod.init;
 
-import cjminecraft.bitofeverything.BitOfEverything;
-import cjminecraft.bitofeverything.entity.EntityGhost;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
+import com.example.mymod.MyMod;
+import com.example.mymod.entities.PitBikeEntity;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModEntities {
-	
-	public static void registerEntities() {
-		registerEntity(EntityGhost.class, "ghost", 64, 20, true);
-	}
-	
-	public static void setEntityToSpawn() {
-		EntityRegistry.addSpawn(EntityGhost.class, 6, 1, 5, EnumCreatureType.MONSTER, BiomeGenBase.beach, BiomeGenBase.birchForest, BiomeGenBase.birchForestHills, BiomeGenBase.coldBeach, BiomeGenBase.coldTaiga, BiomeGenBase.coldTaigaHills, BiomeGenBase.desert, BiomeGenBase.desertHills, BiomeGenBase.extremeHills, BiomeGenBase.extremeHillsEdge, BiomeGenBase.extremeHillsPlus, BiomeGenBase.forest, BiomeGenBase.forestHills, BiomeGenBase.hell, BiomeGenBase.jungle, BiomeGenBase.plains);
-	}
-	
-	public static void generateSpawnEgg() {
-		EntityRegistry.registerEgg(EntityGhost.class, 0, 0);
-	}
-	
-	private static int entityID = 0;
-	
-	/**
-	 * Register an entity with the specified tracking values.
-	 *
-	 * @param entityClass          The entity's class
-	 * @param entityName           The entity's unique name
-	 * @param trackingRange        The range at which MC will send tracking updates
-	 * @param updateFrequency      The frequency of tracking updates
-	 * @param sendsVelocityUpdates Whether to send velocity information packets as well
-	 */
-	private static void registerEntity(Class<? extends Entity> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
-		EntityRegistry.registerModEntity(entityClass, entityName, entityID++, BitOfEverything.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
-	}
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = 
+        DeferredRegister.create(ForgeRegistries.ENTITIES, MyMod.MOD_ID);
 
+    public static final RegistryObject<EntityType<PitBikeEntity>> PIT_BIKE =
+        ENTITY_TYPES.register("pit_bike", () -> EntityType.Builder.of(PitBikeEntity::new, EntityClassification.MISC)
+            .sized(1.0f, 0.5f)
+            .clientTrackingRange(4)
+            .build("pit_bike"));
 }
